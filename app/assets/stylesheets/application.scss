@@ -1,0 +1,43 @@
+.ballWarp {
+  position: relative;
+  &::after {
+    content: "捕まえる";
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #333333;
+    pointer-events: none;
+  }
+}
+
+.ball {
+  margin-inline: auto;
+  height: 100px;
+  width: 110px;
+  border-radius: 50%;
+  background: linear-gradient(red 46%, black 46%, black 54%, white 54%);
+  display: grid;
+  place-items: center;
+}
+
+.center {
+  border-radius: 50%;
+  border: 7px solid black;
+  height: 25%;
+  width: 23%;
+  background-color: #f5f5f5;
+  display: grid;
+  place-items: center;
+  animation: rotate-anim 6s linear infinite;
+}
+
+.submitBtn {
+  background-color: transparent;
+  height: 100px;
+  width: 110px;
+  border-radius: 50px;
+  margin-inline: auto;
+  position: absolute;
+  cursor: pointer;
+}

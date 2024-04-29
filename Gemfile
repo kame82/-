@@ -68,3 +68,12 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem 'cssbundling-rails' #Tailwind
+
+gem 'sass-rails' #scss
+
+group :development, :test do
+  gem 'pry-rails'
+  gem 'pry-byebug'
+end
