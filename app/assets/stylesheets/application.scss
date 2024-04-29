@@ -1,6 +1,8 @@
 .ballWarp {
   position: relative;
-  &::after {
+  transition: all 0.3s ease 0s;
+
+  &::before {
     content: "捕まえる";
     position: absolute;
     top: 80%;
@@ -8,6 +10,7 @@
     transform: translate(-50%, -50%);
     color: #333333;
     pointer-events: none;
+    z-index: 1;
   }
 }
 
@@ -19,6 +22,29 @@
   background: linear-gradient(red 46%, black 46%, black 54%, white 54%);
   display: grid;
   place-items: center;
+  overflow: hidden;
+  position: relative;
+  &::after {
+    content: "";
+    /*絶対配置でキラッと光るの位置を決める*/
+    position: absolute;
+    top: 0;
+    left: -75%;
+    /*キラッと光る形状*/
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
+    transform: skewX(-25deg);
+  }
+  &:hover::after {
+    animation: shine 1s;
+  }
+
+  @keyframes shine {
+    100% {
+      left: 125%;
+    }
+  }
 }
 
 .center {

@@ -19,8 +19,8 @@ class PokemonsController < ApplicationController
       if date? == false
           redirect_to root_path, alert:"月日を正確に入力してください"
       elsif @birthdayS.length == 4 #マイナス値や3桁,5桁の数字を送られたときに弾く
+        #レスポンスの設定
         get_request = Net::HTTP::Get.new("https://pokeapi.co/api/v2/pokemon/#{@birthdayI}", 'content-Type' => 'application/json') #JSON指定
-         #レスポンスの設定
         response = http.request(get_request) #http_clientオブジェクトを使用してget_requestを実行
 
         ###JP name###
@@ -31,7 +31,8 @@ class PokemonsController < ApplicationController
           @jpdata = JSON.parse(jp_response.body) #jp-nameを含んだdataの抽出
           @data = JSON.parse(response.body) #pokemon-data(engのみ)の抽出
         rescue JSON::ParserError
-          redirect_to pokemons_noindex_path
+          # redirect_to pokemons_noindex_path, id: params[:id]
+          redirect_to controller: :pokemons,action: :noindex , id: params[:id]
         end
       else
           redirect_to root_path, alert:"4桁の半角数字で入力してください"
@@ -44,6 +45,20 @@ class PokemonsController < ApplicationController
     end
 
     def noindex
+      @birthdayS = params[:id].to_s
+      @birthM = @birthdayS[0,2]
+      @birthD = @birthdayS[2,2]
+
+      require 'net/http'
+      require 'uri'
+      # クライアントを用意
+      uri = URI.parse('https://pokeapi.co/api/v2/') #URI.parseは、URIオブジェクトを生成するメソッド。
+      http = Net::HTTP.new(uri.host, uri.port) # HTTPクライアントを生成し、引数にホスト名とポート番号を指定している。
+      http.use_ssl = true # httpsで通信をする場合はuse_sslをtrueにする
+      #リクエストを登録
+      get_item_request = Net::HTTP::Get.new("https://pokeapi.co/api/v2/item/4", 'content-Type' => 'application/json') #JSON指定
+      item_response = http.request(get_item_request) #http_clientオブジェクトを使用してget_requestを実行
+      @item = JSON.parse(item_response.body)
     end
 
 private
@@ -56,7 +71,4 @@ private
       end
     end
 
-    def japanese_name
-
-    end
 end
